@@ -23,10 +23,15 @@ export interface IInjector {
     destroy();
 }
 
+let idCount = 0;
+
 export class Injector implements IInjector {
     constructor(providers?: Provider[], public parent?: Injector) {
+        idCount += 1;
+        this._id = 'injector_' + idCount;
         this.providers(providers);
     }
+    private _id;
     private _dic: Map<any, Provider> = new Map();
     providers(providers?: Provider[]): void {
         providers = providers || [];
